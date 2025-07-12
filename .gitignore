@@ -1,1 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+*.session
 
+# Environment variables
+.env
+
+# Virtual environments (even if you're not using one, good to include)
+venv/
+ENV/
+env/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# DB and logs
+*.log
+*.sqlite3
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+
+
+data/raw/telegram_messages/2025-07-11/*
+!data/raw/telegram_messages/2025-07-11/CheMed123.json
+!data/raw/telegram_messages/2025-07-11/lobelia4cosmetics.json
+data/raw/telegram_messages/media/*
+!data/raw/telegram_messages/media/.gitignore
+data/processed/*
+!data/processed/.gitignore
+
+
+# Ignore unwanted files
+1.26.0
