@@ -68,10 +68,10 @@ async def scrape_channel(client, channel_url):
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(all_messages, f, ensure_ascii=False, indent=2)
 
-        print(f"✅ Saved {len(all_messages)} messages from {channel_name}.")
+        print(f"Saved {len(all_messages)} messages from {channel_name}.")
 
     except Exception as e:
-        print(f"❌ Error scraping {channel_url}: {e}")
+        print(f"Error scraping {channel_url}: {e}")
 
 async def main():
     async with TelegramClient(SESSION_NAME, API_ID, API_HASH) as client:

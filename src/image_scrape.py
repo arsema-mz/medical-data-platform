@@ -60,10 +60,10 @@ async def download_images(client, channel_url):
             offset_id = history.messages[-1].id
             await asyncio.sleep(1)
 
-        print(f"✅ Downloaded {count} media files from {channel_name}.")
+        print(f"Downloaded {count} media files from {channel_name}.")
 
     except Exception as e:
-        print(f"❌ Error downloading media from {channel_url}: {e}")
+        print(f"Error downloading media from {channel_url}: {e}")
 
 async def main():
     async with TelegramClient(SESSION_NAME, API_ID, API_HASH) as client:
