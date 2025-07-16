@@ -4,6 +4,11 @@ python-dotenv
 requests
 psycopg2-binary
 telethon
+
+# Use CPU-only torch and torchvision
+torch==2.2.2+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 ultralytics
 dbt-core
 dbt-postgres
@@ -13,5 +18,4 @@ pandas
 numpy
 sqlalchemy
 pydantic
-pytest
 loguru

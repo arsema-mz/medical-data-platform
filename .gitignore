@@ -44,4 +44,5 @@ data/processed/*
 
 # Ignore unwanted files
 1.26.0
-
+*.pt
+*.csv

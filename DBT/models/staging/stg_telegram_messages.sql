@@ -10,6 +10,7 @@ with raw as (
 )
 
 select
+    channel || '_' || message_id as global_message_id,  -- new composite ID
     cast(message_id as integer) as message_id,
     cast(message_date as timestamp) as message_date,
     message_text,

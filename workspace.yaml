@@ -1,0 +1,7 @@
+load_from:
+  - python_file:
+      relative_path: medical_data_pipeline/medical_data_pipeline/definitions.py
+      working_directory: medical_data_pipeline
+  - python_file:
+      relative_path: medical_data_pipeline/medical_data_pipeline/schedules.py
+      working_directory: medical_data_pipeline

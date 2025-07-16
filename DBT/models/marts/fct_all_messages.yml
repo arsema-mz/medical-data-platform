@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: fct_all_messages
+    description: "Full list of messages for search and filtering"
+    columns:
+      - name: message_id
+        description: "Unique message ID"
+      - name: channel
+        description: "Channel the message came from"
+      - name: message_text
+        description: "Raw text of the message"
+      - name: timestamp
+        description: "When the message was posted"

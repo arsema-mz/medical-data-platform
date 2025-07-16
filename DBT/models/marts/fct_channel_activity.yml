@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: fct_channel_activity
+    description: "Daily message volume per Telegram channel"
+    columns:
+      - name: channel
+        description: "The name of the Telegram channel"
+      - name: date
+        description: "The date of message posting"
+      - name: message_count
+        description: "Number of messages sent on that day"

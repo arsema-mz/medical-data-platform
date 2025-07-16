@@ -1,61 +1,93 @@
-# Medical Data Platform – Telegram Pipeline
+# 🩺 Medical Data Platform – Telegram Pipeline
 
-This project extracts raw medical-related messages from public Ethiopian Telegram channels and transforms them into a structured, queryable format using PostgreSQL and dbt.
+This project extracts and processes medical-related messages from public Ethiopian Telegram channels. It uses PostgreSQL, dbt, FastAPI, and Dagster to build a robust, automated data pipeline.
 
 
-## Task 1: Data Ingestion (Raw)
+## Data Ingestion
 
-- **Raw JSON files** collected via a Python scraper are stored in:
+- Scrape messages from Telegram via `src/scrape.py`
+- Raw messages are saved to:
 ```
-
 data/raw/telegram\_messages/YYYY-MM-DD/channel\_name.json
 
 ```
-
-- A Python ETL script loads the messages into a PostgreSQL table:
-
-**Script:** `src/load_raw.py`  
-**Target Table:** `raw.telegram_messages`  
-- Structure:
-  - `channel`: channel name
-  - `message`: raw message as JSONB
-  - `load_timestamp`: insert time
-
----
-
-## Task 2: Data Modeling and Transformation (dbt)
-
-### 🛠 DBT Setup
-
-- Initialized a dbt project: `telegram_project`
-- Connected it to local PostgreSQL using the `analytics` schema
-- Configured staging models to materialize as **views**
-
-### Staging Models
-
-**Model:** `stg_telegram_messages.sql`  
-- Cleans and extracts key fields from `raw.telegram_messages`:
-- `message_id`
-- `message_text`
-- `message_date`
-- `channel`
-- `has_image`
-- `message_length`
-
-**Schema:** `staging`  
-**Materialization:** View
+- Load into PostgreSQL table `raw.telegram_messages` using `src/load_raw.py`
 
 
-## Next Steps
+## Data Modeling (dbt)
 
-- Build **fact and dimension tables** for a star schema:
-  - `dim_channels`, `dim_dates`, `fct_messages`
-- Add **data quality tests** with dbt (unique, not_null, custom tests)
-- Generate dbt documentation
+- DBT project: `telegram_project` (schema: `analytics`)
+- **Staging Models:**
+- `stg_telegram_messages.sql`
+- `stg_image_detections.sql`
+- **Fact Models:**
+- `fct_image_detections.sql`
+- `fct_all_messages.sql`
+- `fct_top_products.sql`
+- `fct_channel_activity.sql`
+- Data quality tests and documentation included
 
-## Requirements
 
-- Python 3.10+
-- PostgreSQL (local)
-- dbt-postgres
-- psycopg2
+## Data Enrichment
+
+- YOLOv8 used to detect medical objects in images
+- Detected classes + confidence stored in `image_detections.csv`
+- Enriched data loaded into PostgreSQL using `src/load_image_detections.py`
+
+
+## Analytical API (FastAPI)
+
+- Created RESTful API in `api/` folder using FastAPI
+- Connected to dbt models via SQLAlchemy
+- Endpoints:
+- `/api/reports/top-products?limit=10`
+- `/api/channels/{channel_name}/activity`
+- `/api/search/messages?query=keyword`
+
+
+## Pipeline Orchestration (Dagster)
+
+- Defined Dagster `job` to orchestrate:
+- `scrape_telegram_data`
+- `load_raw_to_postgres`
+- `run_dbt_transformations`
+- `run_yolo_enrichment`
+- Dagster UI launched via `dagster dev`
+- Added daily schedule for pipeline execution
+
+
+## ⚙️ Tech Stack
+
+- Python, FastAPI, SQLAlchemy, Telethon, YOLOv8
+- PostgreSQL, dbt-core, dbt-postgres
+- Dagster for orchestration
+- Pandas, NumPy, Pydantic, Loguru
+
+
+## ✅ Status
+
+- FastAPI running at `http://localhost:8000`
+- Dagster UI available at `http://localhost:3000`
+
+
+## Deployment
+
+This project is Dockerized for easy deployment and consistent environment setup.
+
+### Prerequisites
+- [Docker](https://docs.docker.com/get-docker/) installed
+- [Docker Compose](https://docs.docker.com/compose/install/) (usually comes with Docker Desktop)
+
+### How to run locally
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/arsema-mz/medical-data-platform.git
+   cd medical-data-platform
+````
+
+2. Build and start the FastAPI container:
+
+   ```bash
+   docker-compose up --build
+   ```

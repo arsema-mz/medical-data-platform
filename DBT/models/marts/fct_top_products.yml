@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: fct_top_products
+    description: "Top mentioned product-like terms from all messages"
+    columns:
+      - name: product_name
+        description: "The word assumed to be a product"
+      - name: mention_count
+        description: "How many times the product was mentioned"

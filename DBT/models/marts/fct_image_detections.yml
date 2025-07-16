@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: fct_image_detections
+    description: "Fact table linking object detections with Telegram messages"
+    columns:
+      - name: message_id
+        tests:
+          - not_null
+      - name: detected_object_class
+        tests:
+          - not_null
+      - name: confidence_score

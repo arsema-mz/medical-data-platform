@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_telegram_messages
+    description: Staged messages from Telegram channels
+    columns:
+      - name: global_message_id
+        description: Unique ID made from channel and message_id
+        tests:
+          - not_null
+          - unique
+      - name: message_id
+        description: Original message ID within the channel
+      - name: channel
+        description: Telegram channel name
+        tests:
+          - not_null
+      - name: message_text
+        description: The actual content of the message (may be null)
+      - name: message_date
+        description: Timestamp of the message
+        tests:
+          - not_null
+      - name: has_image
+        description: Boolean flag if the message has an image
+      - name: message_length
+        description: Length of the text in the message
